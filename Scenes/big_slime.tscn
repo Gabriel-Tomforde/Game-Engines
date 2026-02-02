@@ -1,0 +1,89 @@
+[gd_scene load_steps=12 format=3 uid="uid://haviyxmku1vn"]
+
+[ext_resource type="Script" uid="uid://cjnad3lx6dbqy" path="res://Scripts/basic_slime.gd" id="1_iu1yd"]
+[ext_resource type="Texture2D" uid="uid://cws4lydm8qpw2" path="res://Assets/enemies/Brown Slime Spritesheet.png" id="2_rfjci"]
+[ext_resource type="PackedScene" uid="uid://d24j6jdqbyrwn" path="res://Scenes/killzone.tscn" id="3_xdu2r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p05x2"]
+atlas = ExtResource("2_rfjci")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8qtq"]
+atlas = ExtResource("2_rfjci")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ck2gr"]
+atlas = ExtResource("2_rfjci")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kh2e3"]
+atlas = ExtResource("2_rfjci")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypdjx"]
+atlas = ExtResource("2_rfjci")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hkjiv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p05x2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8qtq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ck2gr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kh2e3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypdjx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iu1yd"]
+size = Vector2(40, 26)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iu1yd"]
+radius = 18.027756
+
+[node name="Big Slime" type="Node2D"]
+z_index = 4
+script = ExtResource("1_iu1yd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(0, -23.000002)
+scale = Vector2(3.3125, 2.828125)
+sprite_frames = SubResource("SpriteFrames_hkjiv")
+autoplay = "default"
+
+[node name="killzone" parent="." instance=ExtResource("3_xdu2r")]
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_iu1yd")
+
+[node name="RayCast2D Left" type="RayCast2D" parent="."]
+position = Vector2(0, -5)
+target_position = Vector2(-25, -2)
+
+[node name="RayCast2D Right" type="RayCast2D" parent="."]
+position = Vector2(0, -5)
+target_position = Vector2(25, -2)
+
+[node name="weakspot" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="weakspot"]
+position = Vector2(0, -24)
+shape = SubResource("CircleShape2D_iu1yd")
+
+[connection signal="body_entered" from="weakspot" to="." method="_on_weakspot_body_entered"]

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://osv687tskex3"]
+
+[ext_resource type="Texture2D" uid="uid://hbpaspa5i01p" path="res://Assets/tilesets/tileset.png" id="1_ftao3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d76ts"]
+size = Vector2(32, 32)
+
+[node name="AnimatableBody2D" type="AnimatableBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ftao3")
+region_enabled = true
+region_rect = Rect2(48, 320, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 3
+shape = SubResource("RectangleShape2D_d76ts")
